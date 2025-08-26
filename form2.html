@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Correction Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile friendly -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      width: 90%; /* responsive */
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+    .container h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    .section-title {
+      color: #5a2ea6;
+      font-weight: bold;
+      margin: 20px 0 10px;
+      font-size: 14px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    input[type="text"], 
+    input[type="tel"], 
+    select, 
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap; /* wraps nicely on smaller screens */
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .radio-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    input[type="file"] {
+      margin-bottom: 15px;
+    }
+    button {
+      display: block;
+      width: 140px;
+      padding: 12px;
+      font-size: 15px;
+      background: linear-gradient(90deg, #5a2ea6, #1a1a66);
+      border: none;
+      color: #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 0 auto;
+      transition: 0.3s;
+    }
+    button:hover {
+      opacity: 0.85;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+      button {
+        width: 100%;
+        border-radius: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Book Correction Form</h2>
+
+    <!-- Personal Info -->
+    <div class="section-title">Personal Information</div>
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">Phone Number *</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="school">University/College *</label>
+    <input type="text" id="school" name="school" required>
+
+    <!-- Materials Info -->
+    <div class="section-title">Materials Information</div>
+    <label for="class">Select BCS *</label>
+    <select id="class" required>
+      <option value="">--Select BCS--</option>
+      <option value="Preliminary">Preliminary</option>
+      <option value="Written">Written</option>
+      <option value="Viva">Viva</option>
+    </select>
+
+    <label for="subject">Subject *</label>
+    <select id="subject" required>
+      <option value="">--Select Subject--</option>
+    </select>
+
+    <label for="version">Version *</label>
+    <select id="version" required>
+      <option>--Select Version--</option>
+      <option>48th-50th BCS</option>
+      <option>47th BCS</option>
+      <option>46th BCS</option>
+      <option>45th BCS</option>
+      <option>44th BCS</option>
+      <option>43th BCS</option>
+      <option>41th BCS</option>
+    </select>
+
+    <label for="page">Page Number *</label>
+    <input type="text" id="page" required>
+
+    <!-- Feedback -->
+    <label>Feedback Type *</label>
+    <div class="radio-group">
+      <label>
+        <input type="radio" id="mistake" name="feedback" value="Mistake" required>
+        Mistake
+      </label>
+      <label>
+        <input type="radio" id="suggestion" name="feedback" value="Suggestion">
+        Suggestion
+      </label>
+    </div>
+
+    <textarea placeholder="Please specify the mistake or write your suggestion"></textarea>
+
+    <!-- File Upload -->
+    <label for="file">File Upload</label>
+    <input type="file" id="file">
+
+    <!-- Submit -->
+    <button type="button" onclick="submitForm()">Submit</button>
+  </div>
+
+  <script>
+    // Subject options based on BCS selection
+    const subjectOptions = {
+      Preliminary: [
+        "বাংলা ভাষা","বাংলা সাহিত্য","English Language","English Literature",
+        "বাংলাদেশ বিষয়াবলি","আন্তর্জাতিক বিষয়াবলি","ভুগোল,পরিবেশ ও দুর্যোগ ব্যবস্থাপনা",
+        "গাণিতিক যুক্তি","মানসিক দক্ষতা","সাধারণ বিজ্ঞান","কম্পিউটার ও তথ্য প্রযুক্তি",
+        "নৈতিকতা, মূল্যবোধ ও সু-শাসন","মাস্টার প্রশ্নব্যাংক","মডেল টেস্ট বুক","আপডেট ইনফো"
+      ],
+      Written: [
+        "বাংলা","English","বাংলাদেশ বিষয়াবলি","আন্তর্জাতিক বিষয়াবলি",
+        "সাধারণ বিজ্ঞান ও তথ্য প্রযুক্তি","গাণিতিক যুক্তি","মানসিক দক্ষতা"
+      ],
+      Viva: [
+        "ক্যাডারভিত্তিক তথ্যাবলি","গুরুত্বপূর্ণ তথ্যাবলি","বিগত বছরের অভিজ্ঞতা"
+      ]
+    };
+
+    const bcsSelect = document.getElementById("class");
+    const subjectSelect = document.getElementById("subject");
+
+    bcsSelect.addEventListener("change", function() {
+      const selected = this.value;
+      subjectSelect.innerHTML = '<option value="">--Select Subject--</option>'; // reset
+      if (subjectOptions[selected]) {
+        subjectOptions[selected].forEach(sub => {
+          const opt = document.createElement("option");
+          opt.value = sub;
+          opt.textContent = sub;
+          subjectSelect.appendChild(opt);
+        });
+      }
+    });
+
+    function submitForm() {
+      alert("Form submitted successfully! (demo only)");
+    }
+  </script>
+
+</body>
+</html>
